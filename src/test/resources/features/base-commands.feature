@@ -2,8 +2,8 @@ Feature: Basic Commands
 
   Scenario: The help command
     Given a Symphony user types "?help"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       """
       broker-dealer algo bot - created using ALgo Framework (ALF) managed by Symphony
 
@@ -24,9 +24,9 @@ Feature: Basic Commands
       """
   Scenario: The bot is the same room as the room administrator
     Given a Symphony user types "?whoami"
-      And the user is the administrator of the room
-     When a Symphony user sends the message
-     Then Symphony should display the following response
+      And the user is an owner of the room
+     When a Symphony user sends the message in a room
+     Then The bot should display the following response
       """
         The room administrator - which allows you to set the client users who can interact with this bot.
         To set their status please use $> ?setclientuser @mention-the-user
@@ -34,30 +34,29 @@ Feature: Basic Commands
 
   Scenario: The bot can only communicate with authorised users
     Given a Symphony user types "?whoami"
-      And the user is not the administrator of the room
+      And the user is not an owner of the room
       And the user is not set as a client user
-     When a Symphony user sends the message
-     Then Symphony should display the following response
+     When a Symphony user sends the message in a room
+     Then The bot should display the following response
       """
         Please speak to the room admin to enable you to interact with me
       """
 
   Scenario: The bot can communicate to an authorised user ie client user
     Given a Symphony user types "?whoami"
-      And the user is not the administrator of the room
+      And the user is not an owner of the room
       And the user is set as a client user
-     When a Symphony user sends the message
-     Then Symphony should display the following response
+     When a Symphony user sends the message in a room
+     Then The bot should display the following response
       """
         Client user - please type ?help to see the commands available to you
       """
 
   Scenario: A room admin can set an authorised client user
     Given a Symphony user types "?setclientuser @Ron Burgundy"
-      And the user is the administrator of the room
-     When a Symphony user sends the message
-     Then Symphony should display the following response
+      And the user is an owner of the room
+     When a Symphony user sends the message in a room
+     Then The bot should display the following response
       """
         @Ron Burgundy has been set as an authorised Client user
       """
-
