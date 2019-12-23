@@ -30,8 +30,8 @@ Feature: Market Command
 
   Scenario: Market command with no parameters should display the help for that command
     Given a Symphony user types "?market"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       """
         The ?market command lists the top five by referenced market names with:
         - a positive move on the day
@@ -54,8 +54,8 @@ Feature: Market Command
   # The below serve as a template
   Scenario: Market command with the top 5 positive movers
     Given a Symphony user types "?market XHKG +"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       | instrument type | instrument short name | instrument     | open  | bid   | ask   | last | volume   | % change |
       | BBERG           | TENCENT               | 700 HK Equity  | 330.8 | 330.8 | 331   | 331  | 5491925  | 0.9      |
       | BBERG           | BANKCOMM-H            | 3328 HK Equity | 5.17  | 5.16  | 5.17  | 5.17 | 8916666  | 0.19     |
@@ -65,8 +65,8 @@ Feature: Market Command
 
   Scenario: Market command with the top 5 negative movers
     Given a Symphony user types "?market XHKG -"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       | instrument type | instrument short name | instrument     | open  | bid   | ask   | last | volume    | % change |
       | BBERG           | CCB-H                 | 939 HK Equity  | 6.25  | 6.25  | 6.26  | 6.26 | 165703432 | -0.31    |
       | BBERG           | ICBC-H                | 1398 HK Equity | 5.63  | 5.63  | 5.64  | 5.64 | 104306295 | -0.52    |
@@ -76,8 +76,8 @@ Feature: Market Command
 
   Scenario: Market command with the top 5 short sold
     Given a Symphony user types "?market XHKG ss"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       | instrument type | instrument short name | instrument     | open  | bid   | ask   | last | volume    | short sell shares | shortsell notional | percentage change |
       | BBERG           | CCB-H                 | 939 HK Equity  | 6.25  | 6.25  | 6.26  | 6.26 | 165703432 | 55385000          | 346710100          | -0.31             |
       | BBERG           | ICBC-H                | 1398 HK Equity | 5.63  | 5.63  | 5.64  | 5.64 | 104306295 | 28942000          | 163232880          | -0.52             |
@@ -87,8 +87,8 @@ Feature: Market Command
 
   Scenario: Market command with the top 5 by vol
     Given a Symphony user types "?market XHKG vol"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       | instrument type | instrument short name | instrument     | open  | bid   | ask   | last | volume    | percentage change |
       | BBERG           | CCB-H                 | 939 HK Equity  | 6.25  | 6.25  | 6.26  | 6.26 | 165703432 | -0.31             |
       | BBERG           | BANK OF CHINA-H       | 3988 HK Equity | 3.15  | 3.14  | 3.15  | 3.14 | 103848479 | -0.62             |

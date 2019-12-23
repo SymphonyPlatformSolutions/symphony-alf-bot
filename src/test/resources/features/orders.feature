@@ -12,8 +12,8 @@ Feature: Orders Command
 
   Scenario: The orders command with no parameters should display the help for that command
     Given a Symphony user types "?orders"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       """
       The ?orders command is intended to list out orders of various characteristics from a particular market
       For example you can list orders that are:
@@ -25,8 +25,8 @@ Feature: Orders Command
 
   Scenario: The orders market on close short command with no MIC code
     Given a Symphony user types "?orders ool"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       """
       Please provide a valid MIC code to identify the market.
       """
@@ -34,16 +34,16 @@ Feature: Orders Command
 
   Scenario: The open limit orders short command with invalid MIC code
     Given a Symphony user types "?orders WRONG ool"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       """
       Please provide a valid MIC code to identify the market.
       """
 
   Scenario: The orders market on close short command with invalid MIC code
     Given a Symphony user types "?orders WRONG moc"
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       """
       Please provide a valid MIC code to identify the market.
       """
@@ -59,8 +59,8 @@ Feature: Orders Command
       | BBERG           | 5 HK Equity    | HSBC HOLDINGS PL      | 58.2  | 58.2  | 4857091  | 58.2  | ORHK000000000002456 | S    | XHKG |
       | BBERG           | 857 HK Equity  | PETROCHINA-H          | 3.62  | 3.63  | 34802702 | 3.63  | ORHK000000000002460 | S    | XHKG |
       | BBERG           | DBS SP Equity  | DBS GROUP HLDGS       | 25.0  | 25.20 | 70945    | 25.40 | ORHK000000000005463 | B    | XSES |
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       | instrument short name | instrument type | instrument     | side | limit | last  | volume   | order id            |
       | TENCENT               | BBERG           | 700 HK Equity  | B    | 331   | 331   | 5491925  | ORHK000000000002457 |
       | SINOPEC CORP-H        | BBERG           | 386 HK Equity  | B    | 4.41  | 4.41  | 31856472 | ORHK000000000002461 |
@@ -79,8 +79,8 @@ Feature: Orders Command
       | BBERG           | 5 HK Equity    | HSBC HOLDINGS PL      | 58.2  | 58.2  | 4857091  | 58.2  | ORHK000000000002456 | S    | XHKG |
       | BBERG           | 857 HK Equity  | PETROCHINA-H          | 3.62  | 3.63  | 34802702 | 3.63  | ORHK000000000002460 | S    | XHKG |
       | BBERG           | DBS SP Equity  | DBS GROUP HLDGS       | 25.0  | 25.20 | 70945    | 25.40 | ORHK000000000005463 | B    | XSES |
-    When a Symphony user sends the message
-    Then Symphony should display the following response
+    When a Symphony user sends the message in a room
+    Then The bot should display the following response
       | instrument type | instrument     | instrument short name | limit | last | short sell shares | volume   | open  | order id            | side |
       | BBERG           | 700 HK Equity  | TENCENT               | 331   | 331  | 1744600           | 5491925  | 330.8 | ORHK000000000002457 | B    |
       | BBERG           | 3328 HK Equity | BANKCOMM-H            | 5.17  | 5.10 | 758000            | 8916666  | 5.17  | ORHK000000000002463 | S    |
