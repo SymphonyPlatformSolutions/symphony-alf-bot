@@ -1,5 +1,6 @@
 package com.symphony.ps.alf.commands;
 
+import clients.SymBotClient;
 import model.InboundMessage;
 import model.OutboundMessage;
 
@@ -22,8 +23,8 @@ public class HelpCommand extends AlfCommand {
 
     public HelpCommand() {}
 
-    public HelpCommand(InboundMessage msg) {
-        super(msg);
+    public HelpCommand(SymBotClient botClient, InboundMessage msg) {
+        super(botClient, msg);
     }
 
     public void execute() {

@@ -1,7 +1,6 @@
 package com.symphony.ps.alf.commands;
 
 import clients.SymBotClient;
-import com.symphony.ps.alf.AlfBot;
 import model.InboundMessage;
 
 public abstract class AlfCommand {
@@ -12,9 +11,9 @@ public abstract class AlfCommand {
 
     public AlfCommand() {}
 
-    public AlfCommand(InboundMessage msg) {
+    public AlfCommand(SymBotClient botClient, InboundMessage msg) {
         this.msg = msg;
-        this.botClient = AlfBot.getBotClient();
+        this.botClient = botClient;
         this.parameters = msg.getMessageText().trim();
         if (this.parameters.contains(" ")) {
             this.parameters = this.parameters.substring(commandName.length() + 1);

@@ -1,8 +1,8 @@
 package com.symphony.ps.alf.test;
 
 import com.symphony.ps.alf.services.PermissionsService;
+import com.symphony.ps.sdk.bdd.SymStepDefinitions;
 import io.cucumber.java8.En;
-import model.User;
 
 public class AlfStepDefinitions implements En {
     public AlfStepDefinitions() {

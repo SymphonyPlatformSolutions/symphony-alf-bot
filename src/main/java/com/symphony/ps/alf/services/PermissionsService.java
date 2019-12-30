@@ -1,14 +1,14 @@
 package com.symphony.ps.alf.services;
 
-import com.symphony.ps.alf.AlfBot;
+import clients.SymBotClient;
 import java.util.HashSet;
 import java.util.Set;
 
 public class PermissionsService {
     private static Set<String> clientList = new HashSet<>();
 
-    public static boolean isOwner(String streamId, long userId) {
-        return AlfBot.getBotClient().getStreamsClient()
+    public static boolean isOwner(SymBotClient botClient, String streamId, long userId) {
+        return botClient.getStreamsClient()
             .getRoomMembers(streamId)
             .stream()
             .anyMatch(m -> m.getId() == userId && m.getOwner());

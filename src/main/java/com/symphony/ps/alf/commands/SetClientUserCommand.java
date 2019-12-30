@@ -1,8 +1,9 @@
 package com.symphony.ps.alf.commands;
 
-import com.symphony.ps.alf.services.AlfService;
+import clients.SymBotClient;
 import com.symphony.ps.alf.services.PermissionsService;
 import model.InboundMessage;
+import model.OutboundMessage;
 
 public class SetClientUserCommand extends AlfCommand {
     public static final String commandName = "setclientuser";
@@ -12,24 +13,24 @@ public class SetClientUserCommand extends AlfCommand {
 
     public SetClientUserCommand() {}
 
-    public SetClientUserCommand(InboundMessage msg) {
-        super(msg);
+    public SetClientUserCommand(SymBotClient botClient, InboundMessage msg) {
+        super(botClient, msg);
     }
 
     public void execute() {
         String streamId = getMsg().getStream().getStreamId();
         long userId = getMsg().getUser().getUserId();
 
-        if (!PermissionsService.isOwner(streamId, userId)) {
-            AlfService.sendMessage(streamId, UNAUTHORISED_MSG);
+        if (!PermissionsService.isOwner(getBotClient(), streamId, userId)) {
+            getBotClient().getMessagesClient().sendMessage(streamId, new OutboundMessage(UNAUTHORISED_MSG));
             return;
         } else if (getMsg().getMentions().isEmpty()) {
-            AlfService.sendMessage(streamId, USAGE_MSG);
+            getBotClient().getMessagesClient().sendMessage(streamId, new OutboundMessage(USAGE_MSG));
             return;
         }
 
         long targetUser = getMsg().getMentions().get(0);
         PermissionsService.setClient(streamId, targetUser);
-        AlfService.sendMessage(streamId, String.format(SET_MSG, targetUser));
+        getBotClient().getMessagesClient().sendMessage(streamId, new OutboundMessage(String.format(SET_MSG, targetUser)));
     }
 }

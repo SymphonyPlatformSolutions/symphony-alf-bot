@@ -1,13 +1,12 @@
 package com.symphony.ps.alf.services;
 
-import com.symphony.ps.alf.AlfBot;
+import clients.SymBotClient;
 import com.symphony.ps.alf.commands.AlfCommand;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import model.InboundMessage;
-import model.OutboundMessage;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,23 +16,18 @@ public class AlfService {
     private static Reflections reflections = new Reflections("");
     private static Map<String, Class<? extends AlfCommand>> commands = new HashMap<>();
 
-    public static void processIncoming(InboundMessage msg) {
+    public static void processIncoming(SymBotClient bot, InboundMessage msg) {
         AlfCommand command = null;
         try {
             command = Objects.requireNonNull(getCommand(msg.getMessageText()))
-                .getConstructor(InboundMessage.class)
-                .newInstance(msg);
+                .getConstructor(SymBotClient.class, InboundMessage.class)
+                .newInstance(bot, msg);
         } catch (Exception e) {
             log.error("Error occurred deriving command from message", e);
         }
         if (command != null) {
             command.execute();
         }
-    }
-
-    public static InboundMessage sendMessage(String streamId, String msgText) {
-        return AlfBot.getBotClient().getMessagesClient()
-            .sendMessage(streamId, new OutboundMessage(msgText));
     }
 
     public static Class<? extends AlfCommand> getCommand(String messageText) {

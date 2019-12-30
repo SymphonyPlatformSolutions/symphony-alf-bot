@@ -1,8 +1,9 @@
 package com.symphony.ps.alf.commands;
 
-import com.symphony.ps.alf.services.AlfService;
+import clients.SymBotClient;
 import com.symphony.ps.alf.services.PermissionsService;
 import model.InboundMessage;
+import model.OutboundMessage;
 
 public class WhoamiCommand extends AlfCommand {
     public static final String commandName = "whoami";
@@ -14,19 +15,19 @@ public class WhoamiCommand extends AlfCommand {
 
     public WhoamiCommand() {}
 
-    public WhoamiCommand(InboundMessage msg) {
-        super(msg);
+    public WhoamiCommand(SymBotClient botClient, InboundMessage msg) {
+        super(botClient, msg);
     }
 
     public void execute() {
         String streamId = getMsg().getStream().getStreamId();
         long userId = getMsg().getUser().getUserId();
 
-        AlfService.sendMessage(streamId, getMessage(streamId, userId));
+        getBotClient().getMessagesClient().sendMessage(streamId, new OutboundMessage(getMessage(streamId, userId)));
     }
 
     private String getMessage(String streamId, long userId) {
-        if (PermissionsService.isOwner(streamId, userId)) {
+        if (PermissionsService.isOwner(getBotClient(), streamId, userId)) {
             return ADMIN_MSG;
         } else if (PermissionsService.isClient(streamId, userId)) {
             return CLIENT_MSG;
