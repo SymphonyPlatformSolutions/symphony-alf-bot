@@ -4,7 +4,6 @@ import clients.SymBotClient;
 import com.symphony.ps.alf.commands.AlfCommand;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import model.InboundMessage;
 import org.reflections.Reflections;
@@ -19,7 +18,12 @@ public class AlfService {
     public static void processIncoming(SymBotClient bot, InboundMessage msg) {
         AlfCommand command = null;
         try {
-            command = Objects.requireNonNull(getCommand(msg.getMessageText()))
+            Class<? extends AlfCommand> commandClass = getCommand(msg.getMessageText());
+            if (commandClass == null) {
+                log.error("Unable to locate command for input: {}", msg.getMessageText());
+                return;
+            }
+            command = commandClass
                 .getConstructor(SymBotClient.class, InboundMessage.class)
                 .newInstance(bot, msg);
         } catch (Exception e) {

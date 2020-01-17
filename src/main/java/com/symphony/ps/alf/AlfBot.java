@@ -17,7 +17,7 @@ public class AlfBot implements SymStaticMain {
 
     public AlfBot() {
         try {
-            SymBotClient botClient = SymBotClient.initBotRsa("config.json");
+            botClient = SymBotClient.initBotRsa("config.json");
             botClient.getDatafeedEventsService().addListeners(
                 new IMListenerImpl(),
                 new RoomListenerImpl()
